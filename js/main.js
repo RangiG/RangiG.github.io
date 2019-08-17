@@ -1,101 +1,77 @@
-jQuery(document).ready(function($) {
+;(function () {
 
-	'use strict';
+    'use strict';
 
-      var owl = $("#owl-testimonials");
-
-        owl.owlCarousel({
-          
-          pagination : true,
-          paginationNumbers: false,
-          autoPlay: 6000, //Set AutoPlay to 3 seconds
-          items : 1, //10 items above 1000px browser width
-          itemsDesktop : [1000,1], //5 items between 1000px and 901px
-          itemsDesktopSmall : [900,1], // betweem 900px and 601px
-          itemsTablet: [600,1], //2 items between 600 and 0
-          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-          
-      });
-
-
-        var top_header = $('.parallax-content');
-        top_header.css({'background-position':'center center'}); // better use CSS
-
-        $(window).scroll(function () {
-        var st = $(this).scrollTop();
-        top_header.css({'background-position':'center calc(50% + '+(st*.5)+'px)'});
-        });
-
-
-        $('.counter').each(function() {
-          var $this = $(this),
-              countTo = $this.attr('data-count');
-          
-          $({ countNum: $this.text()}).animate({
-            countNum: countTo
-          },
-
-          {
-
-            duration: 8000,
-            easing:'linear',
-            step: function() {
-              $this.text(Math.floor(this.countNum));
-            },
-            complete: function() {
-              $this.text(this.countNum);
-              //alert('finished');
+    var carousels = function() {
+        $(".owl-carousel1").owlCarousel(
+            {
+                loop:true,
+                center: true,
+                margin:0,
+                responsiveClass:true,
+                nav:false,
+                responsive:{
+                    0:{
+                        items:1,
+                        nav:false
+                    },
+                    600:{
+                        items:1,
+                        nav:false
+                    },
+                    1000:{
+                        items:3,
+                        nav:true,
+                        loop:false
+                    }
+                }
             }
+        );
 
-          });  
-          
-        });
-
-
-        $('.tabgroup > div').hide();
-        $('.tabgroup > div:first-of-type').show();
-        $('.tabs a').click(function(e){
-          e.preventDefault();
-            var $this = $(this),
-            tabgroup = '#'+$this.parents('.tabs').data('tabgroup'),
-            others = $this.closest('li').siblings().children('a'),
-            target = $this.attr('href');
-        others.removeClass('active');
-        $this.addClass('active');
-        $(tabgroup).children('div').hide();
-        $(target).show();
-      
-        })
-
-
-
-        $(".pop-button").click(function () {
-            $(".pop").fadeIn(300);
-            
-        });
-
-        $(".pop > span").click(function () {
-            $(".pop").fadeOut(300);
-        });
-
-
-        $(window).on("scroll", function() {
-            if($(window).scrollTop() > 100) {
-                $(".header").addClass("active");
-            } else {
-                //remove the background property so it comes transparent again (defined in your css)
-               $(".header").removeClass("active");
+        $(".owl-carousel2").owlCarousel(
+            {
+                loop:true,
+                center: false,
+                margin:0,
+                responsiveClass:true,
+                nav:true,
+                responsive:{
+                    0:{
+                        items:1,
+                        nav:false
+                    },
+                    600:{
+                        items:2,
+                        nav:false
+                    },
+                    1000:{
+                        items:3,
+                        nav:true,
+                        loop:true
+                    }
+                }
             }
-        });
+        );
+    }
 
 
-	/************** Mixitup (Filter Projects) *********************/
-    	$('.projects-holder').mixitup({
-            effects: ['fade','grayscale'],
-            easing: 'snap',
-            transitionSpeed: 400
-        });
+    // svg responsive in mobile mode
+    var checkPosition = function() {
+        if ($(window).width() < 767) {
+            $("#bg-services").attr("viewBox", "0 0 1050 800");
+
+        }
+    };
+
+    (function($) {
+        carousels();
+        checkPosition();
+    })(jQuery);
 
 
+}());
 
-});
+// menu toggle button
+function myFunction(x) {
+    x.classList.toggle("change");
+}
